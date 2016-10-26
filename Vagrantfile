@@ -67,19 +67,19 @@ Vagrant.configure("2") do |config|
     config.vm.provision "shell", inline: <<-SHELL
      apt-get update ; apt-get upgrade -y
     SHELL
+ 
+     config.vm.provision "ansible" do |ansible|
+       ansible.playbook = "playbook.yml"
+       ansible.sudo = true
+     end  
 
-  config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "playbook.yml"
-    ansible.sudo = true
-  end  
-
-(1..4).each do |i|
-  config.vm.define "node-#{i}" do |node|
-    node.vm.provision "shell",
-      inline: "echo hello from node #{i}"
-  end
-end
+      (1..4).each do |i|
+         config.vm.define "node-#{i}" do |node|
+          node.vm.provision "shell",
+           inline: "echo hello from node #{i}"
+       end
+     end
 
 
 
-end
+   end
