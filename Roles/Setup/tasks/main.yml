@@ -1,9 +1,9 @@
 ---
-# tasks file for Roles
+# tasks file for Setup
 
   - name: Install pip from apt
     apt: name=python-pip state=present
 
   - name: Username and Password
-      user= user
-      password= "{{password}}"
+      user: user
+      password: "{{password}}"

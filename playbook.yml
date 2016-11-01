@@ -6,25 +6,7 @@
     roles:
       - Roles
 
-  - hosts: node-1
-    become: True
-
-    host_vars: node-1
     
-  - hosts: node-2
-    become: True
-
-    host_vars: node-2
-
-  - hosts: node-3
-    become: True
-
-    host_vars: node-3
-
-  - hosts: node-4
-    become: True
-
-    host_vars: node-4      
 
 
 
