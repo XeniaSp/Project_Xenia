@@ -4,6 +4,22 @@
   - name: Install pip from apt
     apt: name=python-pip state=present
 
+  - name: Update APT package cache
+    apt: update_cache=yes
+
+  - name: Run apt-get upgrade
+    apt: upgrade=full
+
   - name: Username and Password
       user: user
       password: "{{password}}"
+
+  - name: Install netstat from apt
+    apt: name=net-tools state=present
+
+  - name: Open processes using netstat
+    shell: netstat -tunlp
+    register: results
+
+  - name: Get results from netstat
+    debug: var=results
