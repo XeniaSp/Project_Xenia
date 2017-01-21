@@ -1,0 +1,19 @@
+---
+# tasks file for Firewall
+
+  - name: Install ufw from apt
+    apt:  
+    name: ufw 
+    state: present
+  
+  - name: Generate the rules
+    template:
+    src: {{ item }}.j2
+    dest: /lib/ufw/{{ item }}
+    owner: root
+    group: root
+    mode: 640
+
+    with_items:
+      -user.rules
+    notify: Restart ufw

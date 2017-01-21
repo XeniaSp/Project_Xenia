@@ -1,0 +1,4 @@
+---
+# defaults file for Firewall
+http_port=80
+https_port=443

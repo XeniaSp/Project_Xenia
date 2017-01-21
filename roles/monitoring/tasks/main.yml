@@ -1,0 +1,12 @@
+---
+# tasks file for monitoring
+
+  - name: Install Logwatch
+    apt: 
+    pkg: logwatch 
+    state: installed
+
+  - name: Configure Logwatch
+    command: logwatch --detail Medium --mailto {{ Email }} --output mail --service All --range 'between -7 days and today'  
+     
+
