@@ -15,7 +15,7 @@
     upgrade: full
 
   - name: Username and Password
-      user: user
+      user: "{{user}}"
       password: "{{password}}"
 
 # Use netstat to view open services
@@ -59,4 +59,27 @@
    mount:
    name: /etc/fstab
    state: present
+
+# SSH keys for each user
+
+  -name: Placing SSH key
+   authorized_key: 
+   user: node-1
+   key: "{{ lookup('file', './setup/files/ssh_keys/node-1.pub') }}"
+
+ - name: Placing SSH key
+   authorized_key: 
+   user: node-2
+   key: "{{ lookup('file', './setup/files/ssh_keys/node-2.pub') }}"
+
+ - name: Placing SSH key
+   authorized_key: 
+   user: node-3
+   key: "{{ lookup('file', './setup/files/ssh_keys/node-3.pub') }}"
+
+ - name: Placing SSH key
+   authorized_key: 
+   user: node-4
+   key: "{{ lookup('file', './setup/files/ssh_keys/node-4.pub') }}"
+
 
