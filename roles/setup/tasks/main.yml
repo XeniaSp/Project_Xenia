@@ -14,9 +14,12 @@
     apt: 
     upgrade: full
 
+# Set username and password
+
   - name: Username and Password
       user: "{{user}}"
       password: "{{password}}"
+      state: present
 
 # Use netstat to view open services
  
