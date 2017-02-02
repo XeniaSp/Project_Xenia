@@ -3,17 +3,17 @@
 
   - name: Install ufw from apt
     apt:  
-    name: ufw 
-    state: present
+      name: ufw 
+      state: present
   
   - name: Generate the rules
     template:
-    src: {{ item }}.j2
-    dest: /lib/ufw/{{ item }}
-    owner: root
-    group: root
-    mode: 640
+      src: "{{ item }}"
+      dest: /lib/ufw/"{{ item }}"
+      owner: root
+      group: root
+      mode: 640
 
     with_items:
-      -user.rules
+      -user_rules
     notify: Restart ufw

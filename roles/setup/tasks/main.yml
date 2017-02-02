@@ -3,16 +3,16 @@
 
   - name: Install pip from apt
     apt: 
-    name: python-pip
-    state: present
+      name: python-pip
+      state: present
 
   - name: Update APT package cache
     apt: 
-    update_cache: yes
+      update_cache: yes
 
   - name: Run apt-get upgrade
     apt: 
-    upgrade: full
+      upgrade: full
 
 # Set username and password
 
@@ -25,8 +25,8 @@
  
   - name: Install netstat from apt
     apt: 
-    name: net-tools 
-    state: present
+      name: net-tools 
+      state: present
 
   - name: Open processes using netstat
     shell: netstat -tunlp
@@ -34,15 +34,15 @@
 
   - name: Get results from netstat
     debug: 
-    var: results
+      var: results
 
 # Disable IPv6 using sysctl
 
   - name: Disable IPv6
     sysctl: 
-    name: {{ item }} 
-    value: 1
-    state: present
+      name: {{ item }} 
+      value: 1
+      state: present
     with_items:
       - net.ipv6.conf.all.disable_ipv6
       - net.ipv6.conf.default.disable_ipv6
@@ -50,39 +50,39 @@
 
 # Secure Shared Memory 
 
-  -name: Secure Sared Memory 
-   lineinfile:
-   dest: /etc/fstab
-   line: 'tmpfs /run/shm tmpfs defaults,noexec,nosuid 0 0'
-   state: present
+  - name: Secure Sared Memory 
+    lineinfile:
+      dest: /etc/fstab
+      line: 'tmpfs /run/shm tmpfs defaults,noexec,nosuid 0 0'
+      state: present
 
 # Mount fstab
 
-  -name: Mount fstab
-   mount:
-   name: /etc/fstab
-   state: present
+  - name: Mount fstab
+    mount:
+      name: /etc/fstab
+      state: present
 
 # SSH keys for each user
 
-  -name: Placing SSH key
-   authorized_key: 
-   user: node-1
-   key: "{{ lookup('file', './setup/files/ssh_keys/node-1.pub') }}"
+  - name: Placing SSH key
+    authorized_key: 
+      user: node-1
+      key: "{{ lookup('file', './setup/files/ssh_keys/node-1.pub') }}"
 
  - name: Placing SSH key
    authorized_key: 
-   user: node-2
-   key: "{{ lookup('file', './setup/files/ssh_keys/node-2.pub') }}"
+     user: node-2
+     key: "{{ lookup('file', './setup/files/ssh_keys/node-2.pub') }}"
 
  - name: Placing SSH key
    authorized_key: 
-   user: node-3
-   key: "{{ lookup('file', './setup/files/ssh_keys/node-3.pub') }}"
+     user: node-3
+     key: "{{ lookup('file', './setup/files/ssh_keys/node-3.pub') }}"
 
  - name: Placing SSH key
    authorized_key: 
-   user: node-4
-   key: "{{ lookup('file', './setup/files/ssh_keys/node-4.pub') }}"
+     user: node-4
+     key: "{{ lookup('file', './setup/files/ssh_keys/node-4.pub') }}"
 
 

@@ -1,6 +1,6 @@
 ---
 # defaults file for monitoring
-Email=xeniaspan@gmail.com
+Email: xeniaspan@gmail.com
 
 # defaults for chkrootkit configuration files
 

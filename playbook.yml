@@ -3,9 +3,11 @@
   - hosts: all
     become: true
 
-    roles:
-      - roles
-
+    roles: 
+      - firewall
+      - monitoring
+      - setup
+      
     
 
 
