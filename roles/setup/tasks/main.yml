@@ -16,9 +16,9 @@
 
 # Set username and password
 
-  - name: Username and Password
-      user: "{{user}}"
-      password: "{{password}}"
+  - user:
+      name: "{{ user }}"
+      password: "{{ password }}"
       state: present
 
 # Use netstat to view open services
@@ -40,7 +40,7 @@
 
   - name: Disable IPv6
     sysctl: 
-      name: {{ item }} 
+      name: "{{ item }}" 
       value: 1
       state: present
     with_items:
@@ -65,24 +65,20 @@
 
 # SSH keys for each user
 
-  - name: Placing SSH key
-    authorized_key: 
+  - authorized_key: 
       user: node-1
       key: "{{ lookup('file', './setup/files/ssh_keys/node-1.pub') }}"
+ 
+  - authorized_key: 
+      user: node-2
+      key: "{{ lookup('file', './setup/files/ssh_keys/node-2.pub') }}"
 
- - name: Placing SSH key
-   authorized_key: 
-     user: node-2
-     key: "{{ lookup('file', './setup/files/ssh_keys/node-2.pub') }}"
+  - authorized_key: 
+      user: node-3
+      key: "{{ lookup('file', './setup/files/ssh_keys/node-3.pub') }}"
 
- - name: Placing SSH key
-   authorized_key: 
-     user: node-3
-     key: "{{ lookup('file', './setup/files/ssh_keys/node-3.pub') }}"
-
- - name: Placing SSH key
-   authorized_key: 
-     user: node-4
-     key: "{{ lookup('file', './setup/files/ssh_keys/node-4.pub') }}"
+  - authorized_key: 
+      user: node-4
+      key: "{{ lookup('file', './setup/files/ssh_keys/node-4.pub') }}"
 
 
