@@ -5,15 +5,36 @@
     apt:  
       name: ufw 
       state: present
-  
-  - name: Generate the rules
-    template:
-      src: "{{ item }}"
-      dest: /lib/ufw/"{{ item }}"
-      owner: root
-      group: root
-      mode: 640
 
-    with_items:
-      -user_rules
-    notify: Restart ufw
+# Limit connection to certain ports. Ufw will deny connections if an IP
+# address has attempted to initiate 6 or more connections in the last
+# 30 seconds.
+  
+  - ufw:
+      rule: limit
+      port: "{{ http_port }}"
+      proto: tcp
+
+  - ufw:
+      rule: limit
+      port: "{{ https_port }}"
+      proto: tcp
+
+  - ufw:
+      rule: limit
+      port: ssh
+      proto: tcp
+
+# Enable ufw logging
+
+  - ufw: 
+      logging: on
+    notify:
+      - restart ufw
+
+# Enable ufw   
+  - ufw:
+      state: enabled
+      policy: allow
+ 
+ 
