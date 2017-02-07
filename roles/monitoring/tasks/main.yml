@@ -16,12 +16,19 @@
       pkg: chkrootkit
       state: present
 
+# Create a directory
+  
+  - file: 
+      path: /etc/chkrootkit 
+      state: directory
+      mode: 0755 
+
 # Update chkrootkit configuration
  
   - name: Update chkrootkit config
     template:
       src: chkrootkit.conf.j2 
-      dest: etc/chkrootkit.conf
+      dest: /etc/chkrootkit/chkrootkit.conf
       owner: root
       group: root
       mode: 0644
@@ -30,4 +37,6 @@
 
   - name: Run chkrootkit
     shell: chkrootkit
+
+
 

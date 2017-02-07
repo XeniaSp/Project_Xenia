@@ -50,7 +50,7 @@
 
 # Secure Shared Memory 
 
-  - name: Secure Sared Memory 
+  - name: Secure Shared Memory 
     lineinfile:
       dest: /etc/fstab
       line: 'tmpfs /run/shm tmpfs defaults,noexec,nosuid 0 0'
@@ -61,24 +61,26 @@
   - name: Mount fstab
     mount:
       name: /etc/fstab
+      src: UUID=e3172682-8494-4c5a-89da-b1c9f76aa16a
+      fstype: xfs
       state: present
 
 # SSH keys for each user
 
   - authorized_key: 
       user: node-1
-      key: "{{ lookup('file', './setup/files/ssh_keys/node-1.pub') }}"
+      key: "{{ lookup('file', './files/ssh_keys/node-1.pub') }}"
  
   - authorized_key: 
       user: node-2
-      key: "{{ lookup('file', './setup/files/ssh_keys/node-2.pub') }}"
+      key: "{{ lookup('file', './files/ssh_keys/node-2.pub') }}"
 
   - authorized_key: 
       user: node-3
-      key: "{{ lookup('file', './setup/files/ssh_keys/node-3.pub') }}"
+      key: "{{ lookup('file', './files/ssh_keys/node-3.pub') }}"
 
   - authorized_key: 
       user: node-4
-      key: "{{ lookup('file', './setup/files/ssh_keys/node-4.pub') }}"
+      key: "{{ lookup('file', './files/ssh_keys/node-4.pub') }}"
 
 
