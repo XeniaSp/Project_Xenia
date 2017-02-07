@@ -1,0 +1,42 @@
+---
+# tasks file for monitoring
+
+  - name: Install Logwatch
+    apt: 
+      pkg: logwatch 
+      state: installed
+
+  - name: Configure Logwatch
+    command: logwatch --detail Medium --mailto {{ Email }} --output mail --service All --range 'between -7 days and today'  
+     
+# Installation of chkrootkit
+
+  - name: Install chkrootkit
+    apt:
+      pkg: chkrootkit
+      state: present
+
+# Create a directory
+  
+  - file: 
+      path: /etc/chkrootkit 
+      state: directory
+      mode: 0755 
+
+# Update chkrootkit configuration
+ 
+  - name: Update chkrootkit config
+    template:
+      src: chkrootkit.conf.j2 
+      dest: /etc/chkrootkit/chkrootkit.conf
+      owner: root
+      group: root
+      mode: 0644
+
+# Run Chkrootkit
+
+  - name: Run chkrootkit
+    shell: chkrootkit
+
+
+

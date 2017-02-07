@@ -1,0 +1,10 @@
+---
+# defaults file for monitoring
+Email: xeniaspan@gmail.com
+
+# defaults for chkrootkit configuration files
+
+chkrootkit_rundaily: "true"
+chkrootkit_diffmode: "false"
+chkrootkit_rundailyopts: "-q"
+ 
