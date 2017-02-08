@@ -25,6 +25,12 @@
       port: ssh
       proto: tcp
 
+# Limit packets per IP
+
+  - ufw:
+      rule: limit
+      route: yes
+
 # Enable ufw logging
 
   - ufw: 
@@ -35,6 +41,6 @@
 # Enable ufw   
   - ufw:
       state: enabled
-      policy: allow
+      
  
  

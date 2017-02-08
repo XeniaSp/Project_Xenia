@@ -68,19 +68,7 @@
 # SSH keys for each user
 
   - authorized_key: 
-      user: node-1
-      key: "{{ lookup('file', './files/ssh_keys/node-1.pub') }}"
+      user: "{{ user }}"
+      key: "{{ lookup('file', './files/ssh_keys/{{ user }}.pub') }}"
  
-  - authorized_key: 
-      user: node-2
-      key: "{{ lookup('file', './files/ssh_keys/node-2.pub') }}"
-
-  - authorized_key: 
-      user: node-3
-      key: "{{ lookup('file', './files/ssh_keys/node-3.pub') }}"
-
-  - authorized_key: 
-      user: node-4
-      key: "{{ lookup('file', './files/ssh_keys/node-4.pub') }}"
-
 
