@@ -1,0 +1,6 @@
+---
+# handlers file for intrution
+
+  - name: Restart psad
+    service: name=psad state=restarted
+   

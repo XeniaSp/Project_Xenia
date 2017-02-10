@@ -21,21 +21,6 @@
       password: "{{ password }}"
       state: present
 
-# Use netstat to view open services
- 
-  - name: Install netstat from apt
-    apt: 
-      name: net-tools 
-      state: present
-
-  - name: Open processes using netstat
-    shell: netstat -tunlp
-    register: results
-
-  - name: Get results from netstat
-    debug: 
-      var: results
-
 # Disable IPv6 using sysctl
 
   - name: Disable IPv6
@@ -70,5 +55,19 @@
   - authorized_key: 
       user: "{{ user }}"
       key: "{{ lookup('file', './files/ssh_keys/{{ user }}.pub') }}"
- 
+
+# Disable Irqbalance
+
+  - replace:
+      name: /etc/default/irqbalance
+      regexp: '^ENABLED="1"$'
+      replace: '^ENABLED="0"$'  
+
+# Prevent IP spoofing
+
+  - lineinfile:
+      dest: /etc/host.conf
+      line: 'nospoof on'
+      state: present
+   
 

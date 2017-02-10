@@ -16,7 +16,7 @@
       pkg: chkrootkit
       state: present
 
-# Create a directory
+# Create a directory for chkrootkit
   
   - file: 
       path: /etc/chkrootkit 
@@ -37,6 +37,34 @@
 
   - name: Run chkrootkit
     shell: chkrootkit
+
+# Search for open ports with nmap
+
+  - apt:
+      pkg: nmap
+      state: latest
+
+  - name: Scan for open ports
+    command: nmap -v -sT '{{ IP }}'
+
+  - name: SYN scanning
+    command: nmap -v -sS '{{ IP }}'
+
+# Use netstat to view open services
+ 
+  - name: Install netstat from apt
+    apt: 
+      name: net-tools 
+      state: present
+
+  - name: Open processes using netstat
+    shell: netstat -tunlp
+    register: results
+
+  - name: Get results from netstat
+    debug: 
+      var: results
+
 
 
 
