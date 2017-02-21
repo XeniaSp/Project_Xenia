@@ -4,7 +4,7 @@
 
   - name: Install monitoring tools
     apt:
-      name: chkrootkit
+      name: "{{ item }}"
       state: present
     with_items:
       - logwatch
@@ -14,9 +14,14 @@
 
 # Configure Logwatch 
 
-  - name: Configure Logwatch
-    command: logwatch --detail Medium --mailto {{ Email }} --output mail --service All --range 'between -7 days and today'  
-     
+  - name: Run Logwatch
+    command: logwatch --detail Medium --mailto "{{ Email }}" --service All --range today
+    register: results
+  
+  - name: Get results from logwatch
+    debug:    
+      var: results
+ 
 # Create a directory for chkrootkit
   
   - file: 
