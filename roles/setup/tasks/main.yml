@@ -1,0 +1,65 @@
+---
+# tasks file for Setup
+
+  - name: Install pip from apt
+    apt: 
+      name: python-pip
+      state: present
+
+# Set username and password
+
+  - user:
+      name: "{{ user }}"
+      password: "{{ password }}"
+      state: present
+
+# Disable IPv6 using sysctl
+
+  - name: Disable IPv6
+    sysctl: 
+      name: "{{ item }}" 
+      value: 1
+      state: present
+    with_items:
+      - net.ipv6.conf.all.disable_ipv6
+      - net.ipv6.conf.default.disable_ipv6
+      - net.ipv6.conf.lo.disable_ipv6
+
+# Secure Shared Memory 
+
+  - name: Secure Shared Memory 
+    lineinfile:
+      dest: /etc/fstab
+      line: 'tmpfs /run/shm tmpfs defaults,noexec,nosuid 0 0'
+      state: present
+
+# Mount fstab
+
+  - name: Mount fstab
+    mount:
+      name: /etc/fstab
+      src: UUID=e3172682-8494-4c5a-89da-b1c9f76aa16a
+      fstype: xfs
+      state: present
+
+# SSH keys for each user
+
+  - authorized_key: 
+      user: "{{ user }}"
+      key: "{{ lookup('file', './files/ssh_keys/{{ user }}.pub') }}"
+
+# Disable Irqbalance
+
+  - replace:
+      name: /etc/default/irqbalance
+      regexp: '^ENABLED="1"$'
+      replace: '^ENABLED="0"$'  
+
+# Prevent IP spoofing
+
+  - lineinfile:
+      dest: /etc/host.conf
+      line: 'nospoof on'
+      state: present
+   
+
