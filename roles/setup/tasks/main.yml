@@ -6,14 +6,6 @@
       name: python-pip
       state: present
 
-  - name: Update APT package cache
-    apt: 
-      update_cache: yes
-
-  - name: Run apt-get upgrade
-    apt: 
-      upgrade: full
-
 # Set username and password
 
   - user:

@@ -1,4 +1,14 @@
 ---
+# Run update and upgrade
+
+  - name: Update APT package cache
+    apt: 
+      update_cache: yes
+
+  - name: Run apt-get upgrade
+    apt: 
+      upgrade: full
+
 # tasks file for Firewall
 
   - name: Install ufw from apt
@@ -12,18 +22,12 @@
   
   - ufw:
       rule: limit
-      port: "{{ http_port }}"
+      port: "{{ item }}"
       proto: tcp
-
-  - ufw:
-      rule: limit
-      port: "{{ https_port }}"
-      proto: tcp
-
-  - ufw:
-      rule: limit
-      port: ssh
-      proto: tcp
+    with_items:
+      - "{{ http_port }}"
+      - "{{ https_port }}"
+      - ssh
 
 # Limit packets per IP
 

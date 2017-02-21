@@ -3,7 +3,7 @@
 
   - name: Installing IntrusionDetection-psad 
     apt:
-      pkg: psad
+      name: psad
       state: present
 
 # Configure psad

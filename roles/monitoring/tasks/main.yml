@@ -1,21 +1,22 @@
 ---
 # tasks file for monitoring
+# Installation of monitoring tools
 
-  - name: Install Logwatch
-    apt: 
-      pkg: logwatch 
-      state: installed
+  - name: Install monitoring tools
+    apt:
+      name: chkrootkit
+      state: present
+    with_items:
+      - logwatch
+      - chkrootkit
+      - nmap
+      - net-tools
+
+# Configure Logwatch 
 
   - name: Configure Logwatch
     command: logwatch --detail Medium --mailto {{ Email }} --output mail --service All --range 'between -7 days and today'  
      
-# Installation of chkrootkit
-
-  - name: Install chkrootkit
-    apt:
-      pkg: chkrootkit
-      state: present
-
 # Create a directory for chkrootkit
   
   - file: 
@@ -37,25 +38,31 @@
 
   - name: Run chkrootkit
     shell: chkrootkit
+    register: results
+
+  - name: Get results from chkrootkit
+    debug:
+      var: results
 
 # Search for open ports with nmap
 
-  - apt:
-      pkg: nmap
-      state: latest
-
   - name: Scan for open ports
     command: nmap -v -sT '{{ IP }}'
+    register: results
+
+  - name: Get results from nmap
+    debug:
+      var: results
 
   - name: SYN scanning
     command: nmap -v -sS '{{ IP }}'
+    register: results
+
+  - name: Get results from nmap
+    debug:
+      var: results
 
 # Use netstat to view open services
- 
-  - name: Install netstat from apt
-    apt: 
-      name: net-tools 
-      state: present
 
   - name: Open processes using netstat
     shell: netstat -tunlp

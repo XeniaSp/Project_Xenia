@@ -1,6 +1,6 @@
 ---
 # defaults file for monitoring
-Email: xeniaspan@gmail.com
+Email: "{{ lookup('env','Email') }}"
 
 # defaults for chkrootkit configuration files
 

@@ -2,4 +2,6 @@
 # handlers file for Firewall
 
   - name: Restart ufw
-    service: name=ufw state=restarted
+    service: 
+      name: ufw 
+      state: restarted
