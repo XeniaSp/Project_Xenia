@@ -1,0 +1,7 @@
+---
+# handlers file for Firewall
+
+  - name: Restart ufw
+    service: 
+      name: ufw 
+      state: restarted

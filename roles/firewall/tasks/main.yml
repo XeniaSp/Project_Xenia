@@ -1,0 +1,50 @@
+---
+# Run update and upgrade
+
+  - name: Update APT package cache
+    apt: 
+      update_cache: yes
+
+  - name: Run apt-get upgrade
+    apt: 
+      upgrade: full
+
+# tasks file for Firewall
+
+  - name: Install ufw from apt
+    apt:  
+      name: ufw 
+      state: present
+
+# Limit connection to certain ports. Ufw will deny connections if an IP
+# address has attempted to initiate 6 or more connections in the last
+# 30 seconds.
+  
+  - ufw:
+      rule: limit
+      port: "{{ item }}"
+      proto: tcp
+    with_items:
+      - "{{ http_port }}"
+      - "{{ https_port }}"
+      - ssh
+
+# Limit packets per IP
+
+  - ufw:
+      rule: limit
+      route: yes
+
+# Enable ufw logging
+
+  - ufw: 
+      logging: on
+    notify:
+      - restart ufw
+
+# Enable ufw   
+  - ufw:
+      state: enabled
+      
+ 
+ 
