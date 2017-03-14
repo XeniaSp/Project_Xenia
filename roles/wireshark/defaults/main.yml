@@ -1,0 +1,6 @@
+---
+# defaults file for wireshark
+wireshark_gui: true
+wireshark_cli: true
+wireshark_gui_package: wireshark
+wireshark_cli_package: tshark

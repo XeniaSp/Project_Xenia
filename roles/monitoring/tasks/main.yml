@@ -14,14 +14,24 @@
 
 # Configure Logwatch 
 
-  - name: Run Logwatch
-    command: logwatch --detail Medium --mailto "{{ Email }}" --service All --range today
-    register: results
-  
-  - name: Get results from logwatch
-    debug:    
-      var: results
- 
+  - name: Configure Logwatch
+    replace:
+      name: /usr/share/logwatch/default.conf/logwatch.conf
+      regexp: 'MailTo = root'
+      replace: 'MailTo = "{{ Email }}"'
+
+  - name: Configure Logwatch
+    replace:
+      name: /usr/share/logwatch/default.conf/logwatch.conf
+      regexp: 'Detail = Low'
+      replace: 'Detail = Medium'
+
+  - name: Configure Logwatch
+    replace:
+      name: /usr/share/logwatch/default.conf/logwatch.conf
+      regexp: 'Range = yesterday'
+      replace: 'Range = Today'
+
 # Create a directory for chkrootkit
   
   - file: 
@@ -38,16 +48,6 @@
       owner: root
       group: root
       mode: 0644
-
-# Run Chkrootkit
-
-  - name: Run chkrootkit
-    shell: chkrootkit
-    register: results
-
-  - name: Get results from chkrootkit
-    debug:
-      var: results
 
 # Search for open ports with nmap
 
@@ -79,4 +79,5 @@
 
 
 
-
+      
+    

@@ -1,10 +1,10 @@
 ---
 # defaults file for monitoring
-Email: "{{ lookup('env','Email') }}"
+Email: "{{ lookup('env','EMAIL') }}"
 
 # defaults for chkrootkit configuration files
 
 chkrootkit_rundaily: "true"
 chkrootkit_diffmode: "false"
-chkrootkit_rundailyopts: "-q"
+
  

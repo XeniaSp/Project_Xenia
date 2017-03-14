@@ -1,4 +1,4 @@
 ---
 # defaults file for intrution
 
-email: xeniaspan@gmail.com
+email: "{{ lookup('env','EMAIL') }}"

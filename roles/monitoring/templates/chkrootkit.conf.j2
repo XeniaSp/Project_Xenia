@@ -1,3 +1,3 @@
 RUN_DAILY="{{chkrootkit_rundaily}}"
-RUN_DAILY_OPTS="{{chkrootkit_rundailyopts}}"
+RUN_DAILY_OPTS="-q | mail -s "Daily chkrootkit from "{{ user }}"" "{{ lookup('env','EMAIL') }}""
 DIFF_MODE="{{chkrootkit_diffmode}}"
