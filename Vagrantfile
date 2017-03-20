@@ -17,7 +17,7 @@ Vagrant.configure("2") do |config|
          node.vm.network "public_network" , auto_config: "false" , bridge: ENV['VAGRANT_INTERFACE'] 
 
 # manual ip per machine
-         node.vm.provision "shell" , run: "always" , inline: "ifconfig eth1 192.168.1.#{i+104} netmask 255.255.255.0 up"
+         node.vm.provision "shell" , run: "always" , inline: "ifconfig eth1 192.168.1.#{i+110} netmask 255.255.255.0 up"
 
   config.vm.provision "shell", inline: <<-SHELL
      apt-get update ; apt-get upgrade -y

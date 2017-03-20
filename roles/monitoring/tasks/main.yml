@@ -18,13 +18,13 @@
     replace:
       name: /usr/share/logwatch/default.conf/logwatch.conf
       regexp: 'MailTo = root'
-      replace: 'MailTo = "{{ Email }}"'
+      replace: 'MailTo = xeniaspan@gmail.com'
 
   - name: Configure Logwatch
     replace:
       name: /usr/share/logwatch/default.conf/logwatch.conf
       regexp: 'Detail = Low'
-      replace: 'Detail = Medium'
+      replace: 'Detail = Med'
 
   - name: Configure Logwatch
     replace:
