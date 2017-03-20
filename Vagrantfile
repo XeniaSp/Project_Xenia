@@ -9,21 +9,20 @@ Vagrant.configure("2") do |config|
   # config.vm.network "forwarded_port", guest: 80, host: 8080
 
   # config.vm.network "private_network", ip: "192.168.33.10"
-
-   
-
-  # Enable provisioning with a shell script. Additional provisioners such as
-  # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
-  # documentation for more information about their specific syntax and use.  
-    config.vm.provision "shell", inline: <<-SHELL
-     apt-get update ; apt-get upgrade -y
-    SHELL
-
+ 
      N = 4 
       (1..4).each do |i|
          config.vm.define "node-#{i}" do |node|
          node.vm.hostname = "node-#{i}"
-         node.vm.network "public_network" , bridge: "(VAGRANT_INTERFACE')"
+         node.vm.network "public_network" , auto_config: "false" , bridge: ENV['VAGRANT_INTERFACE'] 
+
+# manual ip per machine
+         node.vm.provision "shell" , run: "always" , inline: "ifconfig eth1 192.168.1.#{i+110} netmask 255.255.255.0 up"
+
+  config.vm.provision "shell", inline: <<-SHELL
+     apt-get update ; apt-get upgrade -y
+    SHELL
+
 #Run ansible
      if i == N
       node.vm.provision:ansible do |ansible|
